@@ -2,6 +2,8 @@
 
 A desktop application with a multi-terminal dashboard for managing and monitoring Kiro CLI sessions with support for both interactive and non-interactive modes.
 
+![Demo](diagrams/PARK_demo.gif)
+
 ## Prerequisites
 
 ⚠️ **IMPORTANT**: Before using PARK, you must have:

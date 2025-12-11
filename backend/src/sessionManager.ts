@@ -197,9 +197,7 @@ export class SessionManager {
   }
 
   private async spawnProcess(session: Session): Promise<void> {
-    const [cmd, ...args] = session.command.split(' ');
-    
-    const proc = spawn(cmd, args, {
+    const proc = spawn(session.command, {
       cwd: session.directory,
       env: process.env,
       shell: true

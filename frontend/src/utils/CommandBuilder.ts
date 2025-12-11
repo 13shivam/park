@@ -28,6 +28,12 @@ export async function buildCommand(
     const fileInput = document.getElementById('session-file') as HTMLInputElement;
     const file = fileInput.files?.[0];
     if (file) {
+      // Validate file extension
+      const fileName = file.name.toLowerCase();
+      if (!fileName.endsWith('.md') && !fileName.endsWith('.txt')) {
+        throw new Error('Only .md and .txt files are allowed');
+      }
+      
       statusText.textContent = 'Uploading file...';
       const uploadFormData = new FormData();
       uploadFormData.append('file', file);
@@ -49,7 +55,7 @@ export async function buildCommand(
       command += ` ${args}`;
     }
     if (promptFilePath) {
-      command = `cat ${promptFilePath} | ${command}`;
+      command = `cat "${promptFilePath}" | ${command}`;
     }
   }
   
