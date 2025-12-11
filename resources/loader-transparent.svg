@@ -1,0 +1,78 @@
+<svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+    </filter>
+  </defs>
+  
+  <!-- Rotating orbit rings -->
+  <circle cx="512" cy="512" r="200" fill="none" stroke="#FFD700" stroke-width="2" opacity="0.3">
+    <animateTransform attributeName="transform" type="rotate" from="0 512 512" to="360 512 512" dur="8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="512" cy="512" r="280" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.2">
+    <animateTransform attributeName="transform" type="rotate" from="360 512 512" to="0 512 512" dur="12s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Central node with glow -->
+  <circle cx="512" cy="512" r="80" fill="url(#glow)" opacity="0.6" filter="url(#blur)">
+    <animate attributeName="r" values="80;100;80" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="512" cy="512" r="60" fill="#FFD700" stroke="#333333" stroke-width="4">
+    <animate attributeName="r" values="60;70;60" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Orbiting nodes -->
+  <g>
+    <animateTransform attributeName="transform" type="rotate" from="0 512 512" to="360 512 512" dur="4s" repeatCount="indefinite"/>
+    <circle cx="312" cy="512" r="40" fill="#FFD700" stroke="#333333" stroke-width="3">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="312" cy="512" r="50" fill="url(#glow)" opacity="0.4"/>
+  </g>
+  
+  <g>
+    <animateTransform attributeName="transform" type="rotate" from="90 512 512" to="450 512 512" dur="4s" repeatCount="indefinite"/>
+    <circle cx="312" cy="512" r="40" fill="#FFD700" stroke="#333333" stroke-width="3">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="312" cy="512" r="50" fill="url(#glow)" opacity="0.4"/>
+  </g>
+  
+  <g>
+    <animateTransform attributeName="transform" type="rotate" from="180 512 512" to="540 512 512" dur="4s" repeatCount="indefinite"/>
+    <circle cx="312" cy="512" r="40" fill="#FFD700" stroke="#333333" stroke-width="3">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="312" cy="512" r="50" fill="url(#glow)" opacity="0.4"/>
+  </g>
+  
+  <g>
+    <animateTransform attributeName="transform" type="rotate" from="270 512 512" to="630 512 512" dur="4s" repeatCount="indefinite"/>
+    <circle cx="312" cy="512" r="40" fill="#FFD700" stroke="#333333" stroke-width="3">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="312" cy="512" r="50" fill="url(#glow)" opacity="0.4"/>
+  </g>
+  
+  <!-- Energy particles -->
+  <circle cx="512" cy="312" r="8" fill="#FFD700">
+    <animateMotion path="M0,0 Q100,-50 200,0" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="712" cy="512" r="8" fill="#FFD700">
+    <animateMotion path="M0,0 Q50,100 0,200" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="512" cy="712" r="8" fill="#FFD700">
+    <animateMotion path="M0,0 Q-100,50 -200,0" dur="2s" begin="1s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="312" cy="512" r="8" fill="#FFD700">
+    <animateMotion path="M0,0 Q-50,-100 0,-200" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>

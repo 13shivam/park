@@ -1,0 +1,20 @@
+{
+  "name": "park-agent-launcher-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for PARK Agent Launcher",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "VITE_ENABLE_DEBUG=false vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@xterm/xterm": "^5.5.0",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-web-links": "^0.11.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.10",
+    "typescript": "^5.3.3"
+  }
+}

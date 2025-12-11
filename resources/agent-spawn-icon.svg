@@ -1,0 +1,49 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#000000"/>
+  
+  <!-- Central spawning node -->
+  <circle cx="512" cy="512" r="60" fill="#FFD700" stroke="#000000" stroke-width="4"/>
+  
+  <!-- Primary agent nodes -->
+  <circle cx="312" cy="312" r="40" fill="#FFD700" stroke="#000000" stroke-width="3"/>
+  <circle cx="712" cy="312" r="40" fill="#FFD700" stroke="#000000" stroke-width="3"/>
+  <circle cx="312" cy="712" r="40" fill="#FFD700" stroke="#000000" stroke-width="3"/>
+  <circle cx="712" cy="712" r="40" fill="#FFD700" stroke="#000000" stroke-width="3"/>
+  
+  <!-- Secondary spawned agents -->
+  <circle cx="200" cy="200" r="25" fill="#FFD700" opacity="0.8"/>
+  <circle cx="824" cy="200" r="25" fill="#FFD700" opacity="0.8"/>
+  <circle cx="200" cy="824" r="25" fill="#FFD700" opacity="0.8"/>
+  <circle cx="824" cy="824" r="25" fill="#FFD700" opacity="0.8"/>
+  
+  <!-- Tertiary spawned agents -->
+  <circle cx="150" cy="150" r="15" fill="#FFD700" opacity="0.6"/>
+  <circle cx="874" cy="150" r="15" fill="#FFD700" opacity="0.6"/>
+  <circle cx="150" cy="874" r="15" fill="#FFD700" opacity="0.6"/>
+  <circle cx="874" cy="874" r="15" fill="#FFD700" opacity="0.6"/>
+  
+  <!-- Connection lines from center to primary nodes -->
+  <line x1="512" y1="512" x2="312" y2="312" stroke="#FFD700" stroke-width="6" opacity="0.7"/>
+  <line x1="512" y1="512" x2="712" y2="312" stroke="#FFD700" stroke-width="6" opacity="0.7"/>
+  <line x1="512" y1="512" x2="312" y2="712" stroke="#FFD700" stroke-width="6" opacity="0.7"/>
+  <line x1="512" y1="512" x2="712" y2="712" stroke="#FFD700" stroke-width="6" opacity="0.7"/>
+  
+  <!-- Connection lines from primary to secondary nodes -->
+  <line x1="312" y1="312" x2="200" y2="200" stroke="#FFD700" stroke-width="4" opacity="0.5"/>
+  <line x1="712" y1="312" x2="824" y2="200" stroke="#FFD700" stroke-width="4" opacity="0.5"/>
+  <line x1="312" y1="712" x2="200" y2="824" stroke="#FFD700" stroke-width="4" opacity="0.5"/>
+  <line x1="712" y1="712" x2="824" y2="824" stroke="#FFD700" stroke-width="4" opacity="0.5"/>
+  
+  <!-- Connection lines from secondary to tertiary nodes -->
+  <line x1="200" y1="200" x2="150" y2="150" stroke="#FFD700" stroke-width="2" opacity="0.3"/>
+  <line x1="824" y1="200" x2="874" y2="150" stroke="#FFD700" stroke-width="2" opacity="0.3"/>
+  <line x1="200" y1="824" x2="150" y2="874" stroke="#FFD700" stroke-width="2" opacity="0.3"/>
+  <line x1="824" y1="824" x2="874" y2="874" stroke="#FFD700" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Geometric spawn indicators (triangles pointing outward) -->
+  <polygon points="512,452 532,472 492,472" fill="#FFD700"/>
+  <polygon points="572,512 552,532 552,492" fill="#FFD700"/>
+  <polygon points="512,572 492,552 532,552" fill="#FFD700"/>
+  <polygon points="452,512 472,492 472,532" fill="#FFD700"/>
+</svg>

@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+backend/dist/
+frontend/dist/
+electron/dist/
+
+# Electron packaging
+*.dmg
+*.app
+*.exe
+*.zip
+*.blockmap
+out/
+build/
+release/
+
+# Environment files
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Runtime data
+~/.park-agent-launcher/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

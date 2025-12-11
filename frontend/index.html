@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>park: parallel agent runtime for kiro-cli</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <h2>park: parallel agent runtime for kiro-cli</h2>
+        <div style="display: flex; gap: 5px;">
+          <button id="theme-toggle-btn" title="Toggle Theme" style="background: transparent; border: 1px solid #3e3e42; color: #cccccc; width: 28px; height: 28px; border-radius: 4px; cursor: pointer; font-size: 16px;">☀</button>
+          <button id="new-session-btn" title="New Session">+</button>
+        </div>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>Sessions</h3>
+        <div class="section-actions">
+          <button id="launch-selected-btn" class="btn-small">Launch</button>
+          <button id="kill-all-btn" class="btn-small">Kill All</button>
+          <button id="cleanup-btn" class="btn-small">Clean Up</button>
+        </div>
+        <ul id="session-list"></ul>
+      </div>
+
+      <div class="sidebar-footer" style="margin-top: auto; padding: 20px; text-align: center;">
+        <img id="park-logo" src="../resources/loader-transparent.svg" alt="PARK" style="width: 96px; height: 96px; opacity: 0.4; transition: all 0.3s ease; cursor: pointer; filter: brightness(0.8); transform: scale(1) rotate(0deg);">
+      </div>
+    </aside>
+
+    <!-- Main Terminal Area -->
+    <main id="terminal-area">
+      <div class="toolbar">
+        <div class="layout-buttons">
+          <button id="view-all-btn">View All Sessions</button>
+        </div>
+        <div class="status">
+          <img id="loading-spinner" src="../resources/loader-transparent.svg" alt="Loading..." style="width: 16px; height: 16px; display: none; margin-right: 8px;">
+          <span id="status-text">Ready</span>
+        </div>
+      </div>
+      <div id="terminal-grid" class="grid-1x1">
+        <div class="terminal-cell" data-cell="0">
+          <div class="cell-header">
+            <span class="cell-title">Terminal</span>
+            <div class="cell-actions" style="display: none;">
+              <button class="cell-stop" onclick="window.stopSession()" title="Stop Session" style="background: #f44336; color: white; border: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; margin-right: 5px;">●</button>
+              <button class="cell-close" onclick="window.closeTerminal()" title="Close">×</button>
+            </div>
+          </div>
+          <div class="terminal-container" style="display: none;"></div>
+          <div class="terminal-empty" style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; color: #888;">
+            <button class="add-session-btn" onclick="document.getElementById('new-session-modal').showModal()" style="width: 60px; height: 60px; border-radius: 50%; background: #0e639c; color: white; border: none; font-size: 32px; cursor: pointer; margin-bottom: 10px;">+</button>
+            <span style="font-size: 14px;">Launch a session</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- New Session Modal -->
+  <dialog id="new-session-modal">
+    <div class="modal-content">
+      <h2>Launch Kiro CLI Session</h2>
+      <form id="new-session-form">
+        <div class="form-group">
+          <label for="session-mode">Mode</label>
+          <select id="session-mode" name="mode" required>
+            <option value="">Select mode...</option>
+            <option value="kiro-interactive">Interactive Chat</option>
+            <option value="kiro-non-interactive">Non-Interactive Command</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="session-name">Session Name</label>
+          <input type="text" id="session-name" name="name" placeholder="my-kiro-session" required>
+        </div>
+        <div class="form-group">
+          <label for="session-directory">Working Directory</label>
+          <input type="text" id="session-directory" name="directory" placeholder="Current directory" required>
+          <small>Leave as-is to use current directory</small>
+        </div>
+        <div class="form-group" id="prompt-group" style="display: none;">
+          <label for="session-prompt">Initial Prompt (Optional)</label>
+          <textarea id="session-prompt" name="prompt" rows="6" placeholder="Paste your prompt here..."></textarea>
+          <small>This will be sent as the first message to Kiro CLI</small>
+        </div>
+        <div class="form-group" id="command-group" style="display: none;">
+          <label for="session-args">Additional Arguments</label>
+          <input type="text" id="session-args" name="args" placeholder="--help">
+          <small>Optional: Add arguments for non-interactive mode</small>
+        </div>
+        <div class="form-group" id="file-group" style="display: none;">
+          <label for="session-file">Upload Prompt File (Optional)</label>
+          <input type="file" id="session-file" name="file" accept=".txt,.md,.prompt">
+          <small>Upload a prompt file for non-interactive mode</small>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Launch Now</button>
+          <button type="button" id="save-btn" class="btn-secondary">Save Config</button>
+          <button type="button" id="cancel-btn" class="btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script>
+    // Fun easter egg: animated logo hover effect
+    document.addEventListener('DOMContentLoaded', () => {
+      const parkLogo = document.getElementById('park-logo');
+      if (!parkLogo) return;
+      
+      parkLogo.addEventListener('mouseenter', () => {
+        const isLight = document.body.classList.contains('light-theme');
+        const glowColor = isLight ? 'rgba(255, 193, 7, 0.6)' : 'rgba(255, 215, 0, 0.8)';
+        parkLogo.style.opacity = '1';
+        parkLogo.style.filter = `brightness(1.5) drop-shadow(0 0 20px ${glowColor})`;
+        parkLogo.style.transform = 'scale(1.1) rotate(5deg)';
+      });
+      
+      parkLogo.addEventListener('mouseleave', () => {
+        parkLogo.style.opacity = '0.4';
+        parkLogo.style.filter = 'brightness(0.8)';
+        parkLogo.style.transform = 'scale(1) rotate(0deg)';
+      });
+    });
+  </script>
+
+  <script type="module" src="/src/app.ts"></script>
+</body>
+</html>

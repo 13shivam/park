@@ -1,0 +1,55 @@
+{
+  "name": "park-electron",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron .",
+    "package:mac": "electron-builder --mac"
+  },
+  "build": {
+    "appId": "com.park.agent-launcher",
+    "productName": "PARK",
+    "directories": {
+      "output": "../dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js"
+    ],
+    "extraResources": [
+      {
+        "from": "../backend/dist",
+        "to": "app/backend/dist"
+      },
+      {
+        "from": "../backend/node_modules",
+        "to": "app/backend/node_modules"
+      },
+      {
+        "from": "../frontend/dist",
+        "to": "app/frontend/dist"
+      },
+      {
+        "from": "../resources",
+        "to": "app/resources"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["arm64", "x64"]
+        }
+      ],
+      "icon": "../resources/icon.icns",
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  }
+}
