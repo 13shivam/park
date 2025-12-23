@@ -13,6 +13,7 @@
     "build:sequential": "run-s build:backend build:frontend",
     "dev": "npm run build && cd electron && npm run dev",
     "package:mac": "npm run build && cd electron && npm run package:mac",
+    "package:win": "npm run build && cd electron && npm run package:win",
     "clean": "rm -rf backend/dist frontend/dist electron/dist dist"
   },
   "devDependencies": {
