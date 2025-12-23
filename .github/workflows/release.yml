@@ -46,16 +46,6 @@ jobs:
           name: PARK-macOS
           path: dist/PARK-*.dmg
       
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: dist/PARK-*.dmg
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
       - name: Calculate SHA256 checksums
         id: checksums
         run: |
@@ -80,3 +70,67 @@ jobs:
               "arm64_sha": "${{ steps.checksums.outputs.arm64_sha }}",
               "x64_sha": "${{ steps.checksums.outputs.x64_sha }}"
             }
+
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm run install:all
+      
+      - name: Build backend
+        run: npm run build:backend
+      
+      - name: Build frontend
+        run: npm run build:frontend
+      
+      - name: Rebuild native modules for Electron
+        run: |
+          cd backend
+          npx @electron/rebuild -f -w node-pty -v 28.0.0
+      
+      - name: Package Electron app
+        run: npm run package:win
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: PARK-Windows
+          path: dist/PARK*.exe
+
+  release:
+    needs: [build-macos, build-windows]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Download macOS artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: PARK-macOS
+          path: dist-macos
+      
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: PARK-Windows
+          path: dist-windows
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist-macos/PARK-*.dmg
+            dist-windows/PARK*.exe
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -4,7 +4,8 @@
   "main": "main.js",
   "scripts": {
     "dev": "electron .",
-    "package:mac": "electron-builder --mac"
+    "package:mac": "electron-builder --mac",
+    "package:win": "electron-builder --win"
   },
   "build": {
     "appId": "com.park.agent-launcher",
@@ -45,6 +46,15 @@
       "icon": "../resources/icon.icns",
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "icon": "../resources/icon.ico"
     }
   },
   "dependencies": {},
